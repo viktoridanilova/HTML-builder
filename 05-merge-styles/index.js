@@ -34,13 +34,19 @@ function fileStat(file, path) {
 
 function readFileInfo(file) {
     fs.readFile(`${__dirname}/styles/${file.name}`,  (err, fileInfo) => {
-        writeBunddle(fileInfo)
+        updateBundle(fileInfo)
     });
 }
 
-function writeBunddle(fileInfo) {
+function writeBundle(fileInfo) {
     fs.appendFile(`${__dirname}/project-dist/bundle.css`, fileInfo, function(error){
         if(error) throw error; 
         console.log('The data was successfully written to the file!');
       });
+}
+
+function updateBundle(fileInfo) {
+    fs.unlink(`${__dirname}/project-dist/bundle.css`,  () => {
+        writeBundle(fileInfo)
+    });
 }

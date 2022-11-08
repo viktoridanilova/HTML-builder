@@ -1,12 +1,31 @@
 const path = require('path');
 const fs = require('fs');
 
-function copyDir() {
-    fs.mkdir(path.join(__dirname, 'files-copy'), { recursive: true }, (err) => {
+fs.stat(path.join(__dirname, 'files-copy'), function(err) {
+    if (!err) {
+        fs.rm(path.join(__dirname, 'files-copy'), { recursive:true, force:true }, (err) => { 
         if (err) {
-            return console.error(err);
+            console.log(err);
+            
         }
-        console.log('Directory has been created!');
+        copyDir();
+            
+        });
+    } else {
+        copyDir();
+    }
+        
+    
+});
+
+
+
+function copyDir() {
+    fs.mkdir(path.join(__dirname, 'files-copy'), { recursive: true, force:true }, (err) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log('Directory has been copied!');
     });
     try {
         fs.readdir(path.join(__dirname, 'files'), {withFileTypes: true}, (err, list) => {
@@ -21,12 +40,12 @@ function copyDir() {
             }
         })
     } catch (err) {
-        console.error(err);
+        console.log(err);
     }
-    console.log('Directory has been copied!');
+    console.log('Directory has been created!');
 }
 
-copyDir();
+
 
     
 
