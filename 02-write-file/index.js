@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
+const process = require('process');
 // const process = require('process');
 
 const write = fs.createWriteStream(path.join(__dirname, 'text.txt'));
@@ -23,12 +24,10 @@ function ask(question) {
         ask(question)
     })
 }
+process.on('exit', () => {
+    console.log('See you again!');
+  });
 
 ask("Enter text: ") 
 
-// fs.appendFile((write), answer, err => {
-//   if(err) {
-//     console.log(err);
-//     return;
-//   }
-// })
+
